@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yy.mapper.RoleMapper">
+
+    <resultMap id="RoleList" type="com.yy.bean.Role">
+        <id column="role_id" property="role_id" />
+        <result column="role_name" property="role_name" />
+        <result column="role_level" property="role_level" />
+        <result column="role_desc" property="role_desc" />
+        <result column="modify_date" property="modify_date" />
+        <result column="create_date" property="create_date" />    
+    </resultMap>
+    
+    
+ 	<select id="roleInfo" resultMap="RoleList" >
+ 		select * from role
+ 	</select>
+ 	
+ 	<insert id="addRole" parameterType="Role">
+ 		insert into role(role_id,role_name,role_level,role_desc,create_date) 
+ 		values(#{role_id},#{role_name},#{role_level},#{role_desc},sysdate())
+ 	</insert>
+	
+	<update id="updateRole" parameterType="Role">
+		update role set role_name=#{role_name},role_level=#{role_level},role_level=#{role_level},role_desc=#{role_desc},modify_date=sysdate()
+		where role_id=#{role_id}
+	</update>
+
+	<delete id="delRole" parameterType="int">
+		delete from role where role_id=#{0}
+	</delete>
+	
+	<select id="getRoleOne" resultType="Role" parameterType="int" >
+ 		select * from role where role_id=#{0}
+ 	</select>
+</mapper>

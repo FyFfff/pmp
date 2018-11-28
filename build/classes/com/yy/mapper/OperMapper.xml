@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yy.mapper.OperMapper">
+
+    <resultMap id="OperatorList" type="com.yy.bean.Operator">
+        <id column="wk_no" property="wk_no" />
+        <result column="password" property="password" />
+        <result column="oname" property="oname" />
+        <result column="msisdn" property="msisdn" />
+        <result column="org_id" property="org_id" />
+        <result column="site_id" property="site_id" />
+        <result column="wk_level" property="wk_level" />
+        <result column="insert_time" property="insert_time" />
+        <result column="modify_time" property="modify_time" />
+        <result column="lock_begin" property="lock_begin" />
+        <result column="lock_end" property="lock_end" />
+        <result column="trytimes" property="trytimes" />
+        <result column="is_lock" property="is_lock" />
+    </resultMap>
+    
+    
+ 	<select id="operInfo" resultMap="OperatorList" >
+ 		select * from Orperator
+ 	</select>
+ 	
+ 	<insert id="addOper" parameterType="Operator">
+ 		insert into Orperator(wk_no,password,oname,msisdn,org_id,site_id,wk_level,insert_time,modify_time,trytimes,is_lock) 
+ 		values(#{wk_no},#{password},#{oname},#{msisdn},#{org_id},#{site_id},#{wk_level},sysdate(),now(),0,0)
+ 	</insert>
+	
+	<update id="updateOper" parameterType="Operator">
+		update Orperator set password=#{password},oname=#{oname},msisdn=#{msisdn},org_id=#{org_id},site_id=#{site_id},wk_level=#{wk_level},modify_time=sysdate()
+		where wk_no=#{wk_no}
+	</update>
+
+	<delete id="delOper" parameterType="int">
+		delete from Orperator where wk_no=#{0}
+	</delete>
+</mapper>

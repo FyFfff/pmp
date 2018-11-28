@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yy.mapper.ShouQuanMapper">
+
+    <resultMap id="OperatorRoleList" type="com.yy.bean.OperatorRole">
+        <id column="role_id" property="role_id" />
+        <id column="wk_no" property="wk_no" />
+    </resultMap>
+    
+    <resultMap id="MenuFunctionList" type="com.yy.bean.RoleFunction">
+        <id column="id" property="id" />
+        <id column="role_id" property="role_id" />
+    </resultMap>
+    
+    
+ 	<select id="getRoleByWkno" resultType="OperatorRole" parameterType="int">
+ 		select * from operator_role where wk_no=#{0}
+ 	</select>
+ 	
+ 	<insert id="addRoleByWkno" parameterType="OperatorRole">
+ 		insert into operator_role(role_id,wk_no) 
+ 		values(#{role_id},#{wk_no})
+ 	</insert>
+
+	<delete id="delRoleByWkno" parameterType="int">
+		delete from operator_role where wk_no=#{0}
+	</delete>
+	
+	
+	<select id="getIdByRoleid" resultMap="MenuFunctionList" parameterType="int">
+ 		select * from role_function where role_id=#{0}
+ 	</select>
+	
+	<insert id="addRoleFunction" parameterType="RoleFunction">
+ 		insert into role_function(role_id,id) 
+ 		values(#{role_id},#{id})
+ 	</insert>
+ 	
+ 	<delete id="delIdByRoleid" parameterType="int">
+		delete from role_function where role_id=#{0}
+	</delete>
+ 	
+	
+</mapper>

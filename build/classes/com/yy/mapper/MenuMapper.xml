@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yy.mapper.MenuMapper">
+
+	<resultMap id="menuTreeList" type="com.yy.bean.Menutree">
+        <id column="id" property="id" />
+        <result column="mname" property="mname" />
+        <result column="parentid" property="parentid" />
+        <result column="url" property="url" />
+        <result column="state" property="state" />
+    </resultMap>
+	
+ 	<select id="getMenuByOperId" resultMap="menuTreeList" parameterType="int">
+ 		select * from menu_tree m where m.id in(
+ 			select r.id from role_function r where r.role_id in(
+ 				select opr.role_id from operator_role opr where opr.wk_no=#{0}
+ 			)
+ 		) and m.state='open'
+ 	</select>
+ 	
+ 	<select id="getMenu" resultMap="menuTreeList" >
+ 		select * from menu_tree where state='open'
+ 	</select>
+ 	
+ 	<select id="getAllMenu" resultMap="menuTreeList" >
+ 		select * from menu_tree
+ 	</select>
+ 	
+ 	<insert id="addMenu" parameterType="Menutree" >
+ 		insert into menu_tree(mname,parentid,url,state,t_level) 
+ 		values(#{mname},#{parentid},#{url},#{state},#{t_level})
+ 	</insert>
+
+	<delete id="delMenu" parameterType="int" >
+		delete from menu_tree where id=#{0}
+	</delete>
+	
+	<update id="updateMenu" parameterType="Menutree" >
+ 		update menu_tree set mname=#{mname},parentid=#{parentid},url=#{url},state=#{state},t_level=#{t_level} 
+ 		where id=#{id}
+ 	</update>
+ 	
+ 	<select id="getMenuByid" parameterType="int" resultType="Menutree" >
+ 		select * from menu_tree where id=#{0}
+ 	</select>
+
+</mapper>

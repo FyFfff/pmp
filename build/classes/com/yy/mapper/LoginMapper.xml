@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yy.mapper.LoginMapper">
+
+ 	<select id="getOrperator" resultType="Operator" parameterType="String">
+ 		select * from Orperator o where o.wk_no=#{0}
+ 	</select>
+ 	
+ 	<update id="updateIsLock" parameterType="int">
+ 		update Orperator set is_lock=#{1},lock_begin=sysdate(),lock_end=sysdate()+1 where wk_no=#{0}
+ 	</update>
+  	
+  	<update id="updateTryTimes" parameterType="int">
+ 		update Orperator set tryTimes=#{1} where wk_no=#{0}
+ 	</update>
+
+</mapper>
